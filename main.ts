@@ -3,6 +3,23 @@ function stop (seconds_to_stop: number) {
     pins.servoWritePin(AnalogPin.P1, 90)
     wait(seconds_to_stop)
 }
+input.onButtonPressed(Button.A, function () {
+    moved_duration = 0
+    while (moved_duration < 70) {
+        led.plot(2, Math.max(4 - moved_duration / 70 * 4, 0))
+        walk_selection = randint(0, 2)
+        moving_duration = randint(1, 5)
+        if (walk_selection == 0) {
+            move_liner(moving_duration, 75)
+        } else if (walk_selection == 1) {
+            turn_right(-30)
+        } else {
+            turn_right(30)
+        }
+        moved_duration += moving_duration + 1
+    }
+    wait(1)
+})
 function move_liner (seconds_to_move: number, speed: number) {
     degrees2 = 90 - speed / 100 * 90
     pins.servoWritePin(AnalogPin.P1, degrees2)
@@ -27,6 +44,9 @@ function turn_right (degrees: number) {
 }
 let time_to_perform = 0
 let degrees2 = 0
+let moving_duration = 0
+let walk_selection = 0
+let moved_duration = 0
 let NUMBER_OF_DEGREES_PER_SEC = 0
 let MICRO_SECOND_IN_A_SECOND = 0
 MICRO_SECOND_IN_A_SECOND = 1000
