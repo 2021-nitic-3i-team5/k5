@@ -3,15 +3,6 @@ function stop (seconds_to_stop: number) {
     pins.servoWritePin(AnalogPin.P1, 90)
     wait(seconds_to_stop)
 }
-input.onButtonPressed(Button.A, function () {
-    move_liner(1, 90)
-    wait_with_blink(500)
-    turn_right(90)
-    wait_with_blink(500)
-    turn_right(-90)
-    wait_with_blink(500)
-    move_liner(1, 90)
-})
 function move_liner (seconds_to_move: number, speed: number) {
     degrees2 = 90 - speed / 100 * 90
     pins.servoWritePin(AnalogPin.P1, degrees2)
@@ -21,23 +12,6 @@ function move_liner (seconds_to_move: number, speed: number) {
 }
 function wait (seconds_to_wait: number) {
     control.waitMicros(seconds_to_wait * MICRO_SECOND_IN_A_SECOND)
-}
-function wait_with_blink (数値: number) {
-    basic.showLeds(`
-        # # # # #
-        # # # # #
-        # # # # #
-        # # # # #
-        # # # # #
-        `)
-    basic.pause(数値)
-    basic.showLeds(`
-        . . . . .
-        . . . . .
-        . . . . .
-        . . . . .
-        . . . . .
-        `)
 }
 function turn_right (degrees: number) {
     time_to_perform = Math.abs(degrees) / NUMBER_OF_DEGREES_PER_SEC * MICRO_SECOND_IN_A_SECOND
