@@ -18,34 +18,32 @@ function assert (that: boolean, reason: string) {
         basic.showString("ASF:" + reason)
     }
 }
-function draw_rasen_rect () {
-    for (let カウンター = 0; カウンター <= 3; カウンター++) {
-        pins.digitalWritePin(DigitalPin.P1, 60)
-        pins.digitalWritePin(DigitalPin.P2, 120)
-        if (カウンター >= 2) {
-            basic.pause(500)
-        } else {
-            basic.pause(500)
-        }
-    }
-    pins.digitalWritePin(DigitalPin.P1, 45)
-    pins.digitalWritePin(DigitalPin.P1, 45)
-    // 実際は 323.74101.
-    basic.pause(300)
-}
 function wait (seconds_to_wait: number) {
     control.waitMicros(seconds_to_wait * MICRO_SECOND_IN_A_SECOND)
 }
 function draw_rasen () {
-    for (let index = 0; index < 50; index++) {
-        draw_rasen_shape(2)
+    for (let 螺旋数 = 0; 螺旋数 <= 49; 螺旋数++) {
+        描画時間 = 500 + 螺旋数 * 250
+        for (let カウンター = 0; カウンター <= 3; カウンター++) {
+            pins.digitalWritePin(DigitalPin.P1, 60)
+            pins.digitalWritePin(DigitalPin.P2, 120)
+            if (カウンター >= 2) {
+                basic.pause(描画時間)
+            } else {
+                basic.pause(描画時間 + 250)
+            }
+        }
+        pins.digitalWritePin(DigitalPin.P1, 45)
+        pins.digitalWritePin(DigitalPin.P1, 45)
+        // 実際は 323.74101.
+        basic.pause(300)
     }
 }
 function draw_rasen_shape (points: number) {
     assert(points >= 3, "pts>=3")
     // カウンタの開始値が 0 以外にできないのが意外だった．
-    for (let カウンター = 0; カウンター <= points - 1; カウンター++) {
-        if (カウンター >= points - 2) {
+    for (let カウンター2 = 0; カウンター2 <= points - 1; カウンター2++) {
+        if (カウンター2 >= points - 2) {
             basic.pause(500)
         } else {
             basic.pause(750)
@@ -68,6 +66,7 @@ function turn_right (degrees: number) {
     stop(1)
 }
 let time_to_perform = 0
+let 描画時間 = 0
 let degrees2 = 0
 let NUMBER_OF_DEGREES_PER_SEC = 0
 let MICRO_SECOND_IN_A_SECOND = 0
