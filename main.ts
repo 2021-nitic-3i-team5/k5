@@ -20,14 +20,18 @@ function assert (that: boolean, reason: string) {
 }
 function draw_rasen_rect () {
     for (let カウンター = 0; カウンター <= 3; カウンター++) {
+        pins.digitalWritePin(DigitalPin.P1, 60)
+        pins.digitalWritePin(DigitalPin.P2, 120)
         if (カウンター >= 2) {
-            move_liner(2, 10)
+            basic.pause(500)
         } else {
-            move_liner(3, 10)
+            basic.pause(500)
         }
-        turn_right(90)
-        stop(1)
     }
+    pins.digitalWritePin(DigitalPin.P1, 45)
+    pins.digitalWritePin(DigitalPin.P1, 45)
+    // 実際は 323.74101.
+    basic.pause(300)
 }
 function wait (seconds_to_wait: number) {
     control.waitMicros(seconds_to_wait * MICRO_SECOND_IN_A_SECOND)
@@ -42,11 +46,12 @@ function draw_rasen_shape (points: number) {
     // カウンタの開始値が 0 以外にできないのが意外だった．
     for (let カウンター = 0; カウンター <= points - 1; カウンター++) {
         if (カウンター >= points - 2) {
-            move_liner(2, 10)
+            basic.pause(500)
         } else {
-            move_liner(3, 10)
+            basic.pause(750)
         }
-        turn_right(90)
+        // 180 - [ { 180 - ( p - 2 ) } / p ]
+        turn_right(180 - 180 * (points - 2) / points)
         stop(1)
     }
 }
